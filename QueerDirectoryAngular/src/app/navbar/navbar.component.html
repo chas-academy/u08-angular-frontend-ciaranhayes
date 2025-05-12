@@ -17,19 +17,19 @@
                 </svg>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/" routerLink="/first-component" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+                <a class="nav-link" href="/" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"  ariaCurrentWhenActive="page">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/discover" routerLink="/second-component" routerLinkActive="active" ariaCurrentWhenActive="page">Discover</a>
+                <a class="nav-link" href="/discover" routerLink="/discover" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page">Discover</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/genre">Genre</a>
+                <a class="nav-link" href="/genre" routerLink="/genre" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page">Genre</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/library">Library</a>
+                <a class="nav-link" href="/library" routerLink="/library" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page">Library</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/contribute">Contribute</a>
+                <a class="nav-link" href="/contribute" routerLink="/contribute" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page">Contribute</a>
             </li>
         </ul>
     </div>

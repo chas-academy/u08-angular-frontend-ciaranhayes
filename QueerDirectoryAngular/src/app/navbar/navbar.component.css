@@ -109,9 +109,10 @@ footer {
     }
 
 .nav-link.active {
-    background-color: #1F253F !important;
-    color: #FBFBFB !important; 
-    border-color: #1F253F !important;
+    background-color: #7D7BB2AA !important;
+    color: #FBFBFB !important;
+    border-color: #7D7BB2AA !important;
+    font-weight: bold;
 }
 
 .nav-link:hover {
