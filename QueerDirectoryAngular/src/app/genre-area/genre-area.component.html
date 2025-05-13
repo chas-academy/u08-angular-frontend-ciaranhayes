@@ -1,22 +1,27 @@
+
+@for(genre of genres; track genre) {
 <section id="genres" class="flex">
     <div id="genre-hold" class="d-flex flex-column">
         <section [id]="genre" class="container-fluid pt-2 pb-2 mb-5 genre-section">
             <h2 class="featured p-2 rounded-3 mt-3 mx-auto genre-title">{{ genre }}</h2>
-            <div class="{{ books[0].genre}} container mt-4 mb-4 d-flex flex-row justify-content-around flex-wrap genre-cards">
+            <div
+                class="{{ books[0].genre}} container mt-4 mb-4 d-flex flex-row justify-content-around flex-wrap genre-cards">
                 @for(book of books; track book._id) {
-                <div class="card mb-5 genre-card">
+                <div class="card mb-4 custom-card mx-2">
                     <div class="card-header">
                         <h2>{{ book.title }}</h2>
                         <p class="italic-text">{{ book.author }}</p>
                     </div>
                     <div class="card-body">
                         <p>{{ book.short_description }}</p>
-                        <p>{{ book.page_length}} pages</p>
                     </div>
-                    <div class="card-footer">{{ book.genres.join(", ")}}</div>
+                    <div class="card-footer">
+                        {{ book.genres?.join(', ') }}
+                    </div>
                 </div>
                 }
             </div>
         </section>
     </div>
 </section>
+}

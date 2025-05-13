@@ -1,46 +1,3 @@
-.genre-section {
-    background-color: #1F253F;
-}
-
-.genre-title {
-    text-align: center;
-    font-size: 1.8rem;
-    color: white;
-}
-
-.genre-cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.genre-card {
-    max-width: 300px;
-    min-width: 200px;
-    margin-bottom: 20px;
-    order: 2;
-}
-
-.card-header h2 {
-    font-size: 1.4rem;
-    color: #fff;
-}
-
-.card-header p.italic-text {
-    font-style: italic;
-    color: #ccc;
-}
-
-.card-body p {
-    font-size: 1rem;
-    color: #eee;
-}
-
-.card-footer {
-    font-size: 0.9rem;
-    color: #bbb;
-}
-
 body {
     margin: 0px;
     background-color: #FBFBFB;
@@ -99,6 +56,11 @@ li.nav-item {
 footer {
     background-color: #7E5B6D;
     min-height: 4rem;
+}
+
+#genres {
+    background-color: #1F253F;
+    margin-top: 4rem;
 }
 
 .footer-text {
@@ -194,4 +156,13 @@ button.nav-link {
     font-weight: bold;
     background-color: #FBFBFB !important;
     color: #7E5B6D !important;
+}
+
+.custom-card {
+    max-width: 300px;
+    min-width: 200px;
+}
+
+.italic-text {
+    font-style: italic;
 }
