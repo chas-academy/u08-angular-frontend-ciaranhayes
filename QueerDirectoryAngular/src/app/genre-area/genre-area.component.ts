@@ -40,15 +40,22 @@ export class GenreAreaComponent implements OnInit {
   booksByGenre: Map<string, any[]> = new Map();
 
   ngOnInit(): void {
-    this.genres.forEach(genre => {
+    this.genres.forEach((genre) => {
       this.getGenreService.getGenre(genre).subscribe({
         next: (data) => {
           this.booksByGenre.set(genre, data);
         },
         error: (error) => {
           console.error(`Failed to fetch books for genre ${genre}`, error);
-        }
+        },
       });
     });
+  }
+
+  sanitizeGenre(genre: string): string {
+    return genre
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^a-z0-9\-]/g, '');
   }
 }

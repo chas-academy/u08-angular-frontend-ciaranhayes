@@ -1,11 +1,8 @@
 <div class="dropdown d-flex justify-content-center vw-70 pb-5">
-    <button (click)="toggleDropdown()" class="btn btn-secondary dropdown-toggle" type="button" id="toggleMenuGenre" data-bs-toggle="dropdown"
-        aria-expanded="false">
-        Browse by Genre
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="toggleMenuGenre">
+    <button (click)="toggleDropdown()" class="btn btn-secondary dropdown-toggle" type="button" id="toggleMenuGenre">Browse by Genre</button>
+    <ul class="dropdown-menu" [class.show]="dropdownOpen" aria-labelledby="toggleMenuGenre">
         @for (genre of genres; track genre) {
-        <li><a class="dropdown-item" href="#">{{ genre }}</a></li>
+        <li><a class="dropdown-item" href="#" (click)="scrollToGenre($event, genre)">{{ genre }}</a></li>
         }
     </ul>
 </div>

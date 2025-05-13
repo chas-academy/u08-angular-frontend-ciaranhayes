@@ -58,7 +58,7 @@ footer {
     min-height: 4rem;
 }
 
-#genres {
+.genresSection {
     background-color: #1F253F;
     margin-bottom: 4rem;
 }

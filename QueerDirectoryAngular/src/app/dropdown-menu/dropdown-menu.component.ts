@@ -33,8 +33,28 @@ export class DropdownMenuComponent {
   ];
 
   dropdownOpen = false;
-  
+
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  sanitizeGenre(genre: string): string {
+    return genre
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^a-z0-9\-]/g, '');
+  }
+
+  scrollToGenre(event: Event, genre: string): void {
+    event.preventDefault();
+
+    const id = this.sanitizeGenre(genre);
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    this.dropdownOpen = false;
   }
 }

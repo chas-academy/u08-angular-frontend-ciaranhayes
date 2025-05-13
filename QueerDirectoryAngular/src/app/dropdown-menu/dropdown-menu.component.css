@@ -153,5 +153,23 @@ button.nav-link {
 }
 
 .dropdown {
-    margin-bottom: 0;
+    margin-bottom: 1rem;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+li {
+    position: relative;
+}
+
+.dropdown-menu.show {
+    display: block !important;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 45%;
+    z-index: 1000;
 }
