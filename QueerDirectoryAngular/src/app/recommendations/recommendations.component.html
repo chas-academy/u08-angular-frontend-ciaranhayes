@@ -1,0 +1,18 @@
+<section id="discovered-books" class="row pt-3 pb-3 mb-5">
+    <div class="col-sm-6 mb-3 d-flex justify-content-center align-items-center mt-5">
+        <button id="recommendationButton" type="button" class="btn btn-lg featured p-2 rounded-3 my-auto" (click)="getRecommendation()">Get
+            Recommendation</button>
+    </div>
+    <div class="col-sm-6 d-flex justify-content-center align-items-center mt-5" id="discover">
+        <div class="card mb-5 custom-card">
+            <div class="card-header">
+                <h2>{{ book[0].title }}</h2>
+                <p class="italic-text">{{ book[0].author }}</p>
+            </div>
+            <div class="card-body">
+                <p>{{ book[0].short_description }}</p>
+            </div>
+            <div class="card-footer">{{ book[0].genres?.join(', ') }}</div>
+        </div>
+    </div>
+</section>
