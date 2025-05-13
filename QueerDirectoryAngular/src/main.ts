@@ -4,6 +4,7 @@ import { importProvidersFrom } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 bootstrapApplication(AppComponent, {
   ...appConfig,

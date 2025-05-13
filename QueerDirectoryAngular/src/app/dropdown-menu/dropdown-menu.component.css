@@ -58,11 +58,6 @@ footer {
     min-height: 4rem;
 }
 
-#genres {
-    background-color: #1F253F;
-    margin-bottom: 4rem;
-}
-
 .footer-text {
     padding-top: 1rem;
     text-align: center;
@@ -114,10 +109,9 @@ footer {
     }
 
 .nav-link.active {
-    background-color: #7D7BB2AA !important;
-    color: #FBFBFB !important;
-    border-color: #7D7BB2AA !important;
-    font-weight: bold;
+    background-color: #1F253F !important;
+    color: #FBFBFB !important; 
+    border-color: #1F253F !important;
 }
 
 .nav-link:hover {
@@ -158,11 +152,6 @@ button.nav-link {
     color: #7E5B6D !important;
 }
 
-.custom-card {
-    max-width: 300px;
-    min-width: 200px;
-}
-
-.italic-text {
-    font-style: italic;
+.dropdown {
+    margin-bottom: 0;
 }
