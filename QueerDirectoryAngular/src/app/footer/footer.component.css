@@ -1,0 +1,154 @@
+body {
+    margin: 0px;
+    background-color: #FBFBFB;
+    font-family: Arial, Helvetica, sans-serif;
+    height: auto;
+}
+
+nav{
+    background-color: #7E5B6D;
+}
+
+.navbar a {
+    float: left;
+    padding: 0.6rem;
+    color: #F5F5F5;
+    background-color: #7E5B6D;
+    border-radius: 10px;
+    font-weight: 500;
+
+}
+
+.navbar a:hover {
+    background-color: #FBFBFB;
+    color: #1F253F;
+}
+
+li.nav-item {
+    margin-right: 0.5rem;
+}
+
+.active {
+    background-color: #1F253F;
+    color: #FBFBFB
+}
+
+.hero {
+    background-color: #7D7BB2;
+}
+
+.hero-text, .bookh2 {
+    color:#FBFBFB
+}
+
+#featured-books, #discovered-books, #library {
+    background-color: #1F253F;
+}
+
+.featured {
+    color:#1F253F;
+    background-color: #FBFBFB;
+    font-weight: 500;
+    max-width: fit-content;
+    border: 3px solid #7D7BB2;
+}
+
+footer {
+    background-color: #7E5B6D;
+    min-height: 4rem;
+}
+
+.footer-text {
+    padding-top: 1rem;
+    text-align: center;
+    color:#FBFBFB;
+}
+
+.feature {
+    color: #1F253F;
+    background-color: #FBFBFB;
+    border-radius: 15px;
+}
+
+#toggleMenuGenre {
+    background-color: #7D7BB2;
+    color: #FBFBFB;
+    border: 0px;
+}
+
+.discoverNewBook {
+    color:#1F253F;
+}
+
+.rounded {
+    border-top: 4px solid #7E5B6D;
+    border-radius: 5px;
+}
+
+.w-max-content {
+    max-width: min-content;
+}
+
+#recommendationButton {
+    color:#1F253F;
+    background-color:#FBFBFB;
+}
+
+.genre, .books {
+    font-weight: bolder;
+    background-color:#7E5B6D;
+    color: #FBFBFB !important;
+}
+
+#filter-search, #filterForDelete {
+    border: 2px solid #1F253F;
+}
+    ::placeholder {
+        color:#1F253F;
+        opacity: 0.6;
+    }
+
+.nav-link.active {
+    background-color: #7D7BB2AA !important;
+    color: #FBFBFB !important;
+    border-color: #7D7BB2AA !important;
+    font-weight: bold;
+}
+
+.nav-link:hover {
+background-color: #7D7BB2AA !important;
+color: #FBFBFB !important;
+border-color: #7D7BB2AA !important;
+}
+
+button.nav-link {
+    color: #1F253F !important; 
+}
+
+#editSubmit, #deleteSubmit {
+    display: none;
+}
+
+.btn-warning {
+    background-color: #e6a258 !important;
+    color:#FBFBFB !important;
+    border: none !important;
+}
+
+.btn-danger {
+    background-color:#f44336 !important;
+    color:#FBFBFB !important;
+    border: none !important;
+}
+
+.btn-primary {
+    background-color: #5d965a!important;
+    color: #FBFBFB !important;
+    border: none !important;
+}
+
+.activeNav {
+    font-weight: bold;
+    background-color: #FBFBFB !important;
+    color: #7E5B6D !important;
+}
