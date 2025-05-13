@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class APIGetOneService {
-  private baseUrl = `https://queer-books-api.onrender.com/books`
+  private baseUrl = `https://queer-books-api.onrender.com/books`;
 
   constructor(private http: HttpClient) { }
 

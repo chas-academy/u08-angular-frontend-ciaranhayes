@@ -1,0 +1,19 @@
+<section id="library" class="container-fluid pt-2 pb-2 mb-5">
+    <h2 class="d-block text-center featured p-2 rounded-3 mt-3 mx-auto">Books</h2>
+    <div class="container mt-4 mb-4 d-flex flex-row justify-content-around flex-wrap" id="featured">
+        @for(book of books; track book._id) {
+        <div class="card mb-4 custom-card mx-2">
+            <div class="card-header">
+                <h2>{{ book.title }}</h2>
+                <p class="italic-text">{{ book.author }}</p>
+            </div>
+            <div class="card-body">
+                <p>{{ book.short_description }}</p>
+            </div>
+            <div class="card-footer">
+                {{ book.genres?.join(', ') }}
+            </div>
+        </div>
+        }
+    </div>
+</section>
