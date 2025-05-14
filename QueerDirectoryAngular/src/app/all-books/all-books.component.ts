@@ -33,16 +33,16 @@ export class AllBooksComponent implements OnInit {
       },
     });
     this.searchControl.valueChanges
-          .pipe(
-            startWith(''),
-            debounceTime(100),
-            distinctUntilChanged(),
-            map((searchTerm) => (searchTerm ?? '').toLowerCase())
-          )
-          .subscribe((searchTerm) => {
-            this.filteredBooks = this.books.filter((book) =>
-              book.title.toLowerCase().includes(searchTerm)
-            );
-          });
+      .pipe(
+        startWith(''),
+        debounceTime(100),
+        distinctUntilChanged(),
+        map((searchTerm) => (searchTerm ?? '').toLowerCase())
+      )
+      .subscribe((searchTerm) => {
+        this.filteredBooks = this.books.filter((book) =>
+          book.title.toLowerCase().includes(searchTerm)
+        );
+      });
   }
 }
