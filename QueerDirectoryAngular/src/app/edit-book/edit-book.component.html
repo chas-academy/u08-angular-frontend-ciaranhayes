@@ -13,6 +13,7 @@
             </div>
             <div class="card-body">
                 <p>{{ book.short_description }}</p>
+                <p>{{ book.page_length}}</p>
             </div>
             <div class="card-footer">
                 {{ book.genres?.join(', ') }}
@@ -25,4 +26,40 @@
         </div>
         }
     </div>
+</section>
+<section id="editSubmit" class="container-fluid ps-md-5 pe-md-5"
+    [style.display]="(isVisible$ | async) ? 'block' : 'none'">
+    <form id="editInfoForm" (ngSubmit)="submitEditBook()" #editForm="ngForm" class="ms-3 me-3 ms-md-5 me-md-5">
+        <input class="form-control" name="_id" [value]="editBook._id">
+
+        <div class="mb-3 mt-3">
+            <label class="form-label">Title:</label>
+            <input type="text" class="form-control" name="title" [(ngModel)]="editBook.title" required>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label class="form-label">Author:</label>
+            <input type="text" class="form-control" name="author" [(ngModel)]="editBook.author" required>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label class="form-label">Description:</label>
+            <textarea class="form-control" name="short_description" rows="3" [(ngModel)]="editBook.short_description"
+                required></textarea>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label class="form-label">Page Count:</label>
+            <input type="text" class="form-control" name="page" [(ngModel)]="editBook.page" required>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label class="form-label">Genres (comma separated):</label>
+            <input type="text" class="form-control" name="genres" [ngModel]="editBook.genres?.join(', ')"
+                (ngModelChange)="setGenresFromString($event)">
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid">Submit</button>
+    </form>
+
 </section>

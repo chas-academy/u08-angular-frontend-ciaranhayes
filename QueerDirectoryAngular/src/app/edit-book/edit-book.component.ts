@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -9,11 +9,12 @@ import {
 import { EditBookService } from '../edit-book.service';
 import { GetAllBooksService } from '../get-all-books.service';
 import { CommonModule } from '@angular/common';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-edit-book',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './edit-book.component.html',
   styleUrls: ['./edit-book.component.css'],
 })
@@ -36,6 +37,13 @@ export class EditBookComponent implements OnInit {
     private getAllBooksService: GetAllBooksService,
     private editBookService: EditBookService
   ) {}
+
+  private visibleSubject = new BehaviorSubject<boolean>(true);
+  isVisible$ = this.visibleSubject.asObservable();
+
+  toggleVisibility(): void {
+    this.visibleSubject.next(!this.visibleSubject.value);
+  }
 
   ngOnInit(): void {
     this.getAllBooksService.getAll().subscribe({
@@ -61,6 +69,12 @@ export class EditBookComponent implements OnInit {
         );
       });
   }
+  setGenresFromString(value: string): void {
+    this.editBook.genres = value
+      .split(',')
+      .map((g) => g.trim())
+      .filter((g) => g.length > 0);
+  }
 
   onEditClick(book: any): void {
     this.editBook = {
@@ -72,9 +86,16 @@ export class EditBookComponent implements OnInit {
       genres: book.genres,
     };
     this.showEditForm = true;
+    this.toggleVisibility();
   }
 
   submitEditBook(): void {
+    console.log('Submit called');
+    console.log(this.editBook);
+    if (!this.editBook._id) {
+      console.error('Missing book ID to edit.');
+      return;
+    }
     if (!this.editBook._id) {
       console.error('Missing book ID to edit.');
       return;
