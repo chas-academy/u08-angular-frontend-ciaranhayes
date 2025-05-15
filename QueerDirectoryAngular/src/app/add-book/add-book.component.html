@@ -1,0 +1,32 @@
+<section id="addSubmit" class="container-fluid ps-md-5 pe-md-5">
+    <form id="subtmitAddBook" (ngSubmit)="submitAddBook()" #addForm="ngForm" class="ms-3 me-3 ms-md-5 me-md-5">
+        <div class="mb-3 mt-3">
+            <label class="form-label">Title:</label>
+            <input type="text" class="form-control" name="title" [(ngModel)]="addBook.title" required>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label class="form-label">Author:</label>
+            <input type="text" class="form-control" name="author" [(ngModel)]="addBook.author" required>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label class="form-label">Description:</label>
+            <textarea class="form-control" name="short_description" rows="3" [(ngModel)]="addBook.description"
+                required></textarea>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label class="form-label">Page Count:</label>
+            <input type="text" class="form-control" name="page" [(ngModel)]="addBook.page" required>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label class="form-label">Genres (comma separated):</label>
+            <input type="text" class="form-control" name="genres" [(ngModel)]="genresString" (ngModelChange)="setGenresFromString($event)" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="addForm.invalid">Submit</button>
+    </form>
+
+</section>

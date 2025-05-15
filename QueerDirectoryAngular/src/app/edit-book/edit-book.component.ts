@@ -33,6 +33,9 @@ export class EditBookComponent implements OnInit {
     genres: [] as string[],
   };
 
+  // Remove genresString and use direct two-way binding with editBook.genres
+  // Then format for display only when needed
+
   constructor(
     private getAllBooksService: GetAllBooksService,
     private editBookService: EditBookService
@@ -46,16 +49,8 @@ export class EditBookComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllBooksService.getAll().subscribe({
-      next: (data) => {
-        this.books = data;
-        this.filteredBooks = data;
-      },
-      error: (error) => {
-        console.error('Failed to fetch books', error);
-      },
-    });
-
+    this.loadBooks();
+    
     this.searchControl.valueChanges
       .pipe(
         startWith(''),
@@ -69,11 +64,17 @@ export class EditBookComponent implements OnInit {
         );
       });
   }
-  setGenresFromString(value: string): void {
-    this.editBook.genres = value
-      .split(',')
-      .map((g) => g.trim())
-      .filter((g) => g.length > 0);
+
+  loadBooks(): void {
+    this.getAllBooksService.getAll().subscribe({
+      next: (data) => {
+        this.books = data;
+        this.filteredBooks = data;
+      },
+      error: (error) => {
+        console.error('Failed to fetch books', error);
+      },
+    });
   }
 
   onEditClick(book: any): void {
@@ -83,39 +84,47 @@ export class EditBookComponent implements OnInit {
       author: book.author,
       short_description: book.short_description,
       page: book.page_length,
-      genres: book.genres,
+      genres: Array.isArray(book.genres) ? [...book.genres] : [],
     };
+    
     this.showEditForm = true;
     this.toggleVisibility();
   }
 
-  submitEditBook(): void {
-    console.log('Submit called');
-    console.log(this.editBook);
-    if (!this.editBook._id) {
-      console.error('Missing book ID to edit.');
-      return;
-    }
-    if (!this.editBook._id) {
-      console.error('Missing book ID to edit.');
-      return;
-    }
+  // Format genres array for display in the input
+  get genresDisplay(): string {
+    return this.editBook.genres.join(', ');
+  }
 
+  // Parse input back to genres array
+  set genresDisplay(value: string) {
+    this.editBook.genres = value
+      .split(',')
+      .map(g => g.trim())
+      .filter(g => g.length > 0);
+  }
+
+  submitEditBook(): void {
+    // Create a clean copy of the data to send
     const updatePayload = {
       title: this.editBook.title,
       author: this.editBook.author,
       short_description: this.editBook.short_description,
       page_length: this.editBook.page,
-      genres: this.editBook.genres,
+      genres: [...this.editBook.genres], // Ensure we send a copy
     };
+
+    console.log('Submitting payload:', updatePayload); // Debug log
 
     this.editBookService.editBook(this.editBook._id, updatePayload).subscribe({
       next: (response) => {
-        console.log('Book updated:', response);
+        console.log('Update successful:', response);
         this.showEditForm = false;
+        this.loadBooks(); // Refresh the list
       },
       error: (err) => {
-        console.error('Failed to update book:', err);
+        console.error('Update failed:', err);
+        // Add user feedback here
       },
     });
   }
