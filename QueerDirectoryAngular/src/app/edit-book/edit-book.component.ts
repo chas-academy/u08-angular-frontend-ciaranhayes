@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  map,
-  startWith,
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operators';
 import { EditBookService } from '../edit-book.service';
 import { GetAllBooksService } from '../get-all-books.service';
 import { CommonModule } from '@angular/common';
@@ -33,6 +28,8 @@ export class EditBookComponent implements OnInit {
     genres: [] as string[],
   };
 
+  genresInput = new FormControl('');
+
   constructor(
     private getAllBooksService: GetAllBooksService,
     private editBookService: EditBookService
@@ -46,16 +43,8 @@ export class EditBookComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllBooksService.getAll().subscribe({
-      next: (data) => {
-        this.books = data;
-        this.filteredBooks = data;
-      },
-      error: (error) => {
-        console.error('Failed to fetch books', error);
-      },
-    });
-
+    this.loadBooks();
+    
     this.searchControl.valueChanges
       .pipe(
         startWith(''),
@@ -70,52 +59,18 @@ export class EditBookComponent implements OnInit {
       });
   }
 
-  genresString = '';
+  loadBooks(): void {
+    this.getAllBooksService.getAll().subscribe({
+      next: (data) => {
+        this.books = data;
+        this.filteredBooks = data;
+      },
+      error: (error) => {
+        console.error('Failed to fetch books', error);
+      },
+    });
+  }
 
-  //   setGenresFromString(value: string): void {
-  //   this.genresString = value;
-
-  //   this.editBook.genres = value
-  //     .split(',')
-  //     .map((g) => g.trim())
-  //     .filter((g) => g.length > 0);
-  // }
-
-  //   onEditClick(book: any): void {
-  //   this.editBook = {
-  //     _id: book._id,
-  //     title: book.title,
-  //     author: book.author,
-  //     short_description: book.short_description,
-  //     page: book.page_length,
-  //     genres: book.genres ?? [],
-  //   };
-
-  //   this.genresString = (book.genres ?? []).join(', ');
-
-  //   this.showEditForm = true;
-  //   this.toggleVisibility();
-  // }
-
-  //   submitEditBook(): void {
-  //     const updatePayload = {
-  //       title: this.editBook.title,
-  //       author: this.editBook.author,
-  //       short_description: this.editBook.short_description,
-  //       page_length: this.editBook.page,
-  //       genres: this.editBook.genres,
-  //     };
-
-  //     this.editBookService.editBook(this.editBook._id, updatePayload).subscribe({
-  //       next: (response) => {
-  //         console.log('Book updated:', response);
-  //         this.showEditForm = false;
-  //       },
-  //       error: (err) => {
-  //         console.error('Failed to update book:', err);
-  //       },
-  //     });
-  //   }
   onEditClick(book: any): void {
     this.editBook = {
       _id: book._id,
@@ -123,44 +78,57 @@ export class EditBookComponent implements OnInit {
       author: book.author,
       short_description: book.short_description,
       page: book.page_length,
-      genres: book.genres ?? [],
+      genres: Array.isArray(book.genres) ? [...book.genres] : [],
     };
-
-    this.genresString = this.editBook.genres.join(', ');
+    
+    this.genresInput.setValue(this.editBook.genres.join(', '));
+    
     this.showEditForm = true;
     this.toggleVisibility();
   }
 
-  setGenresFromString(value: string): void {
-  this.genresString = value;
-  const parsed = value
-    .split(',')
-    .map((g) => g.trim())
-    .filter((g) => g.length > 0);
-
-  this.editBook.genres = parsed;
-
-  console.log('Genres String:', this.genresString);
-  console.log('Parsed Genres:', this.editBook.genres);
-}
-
   submitEditBook(): void {
-    const updatePayload = {
-      title: this.editBook.title,
-      author: this.editBook.author,
-      short_description: this.editBook.short_description,
-      page_length: this.editBook.page,
-      genres: this.editBook.genres,
-    };
+  this.editBook.genres = this.genresInput.value
+    ? this.genresInput.value.split(',').map(g => g.trim()).filter(g => g.length > 0)
+    : [];
 
-    this.editBookService.editBook(this.editBook._id, updatePayload).subscribe({
-      next: (response) => {
-        console.log('Book updated:', response);
-        this.showEditForm = false;
-      },
-      error: (err) => {
-        console.error('Failed to update book:', err);
-      },
-    });
-  }
+  const updatePayload = {
+    title: this.editBook.title,
+    author: this.editBook.author,
+    short_description: this.editBook.short_description,
+    page_length: this.editBook.page,
+    genres: this.editBook.genres,
+  };
+
+  console.log('Submitting payload:', JSON.stringify(updatePayload, null, 2));
+
+  this.editBookService.editBook(this.editBook._id, updatePayload).subscribe({
+    next: (response) => {
+      console.log('Full API response:', response);
+      
+      const updatedBooks = this.books.map(book => {
+        if (book._id === this.editBook._id) {
+          return { 
+            ...book,
+            ...updatePayload,
+            genres: [...this.editBook.genres]
+          };
+        }
+        return book;
+      });
+
+      this.books = updatedBooks;
+      this.filteredBooks = updatedBooks;
+      
+      this.showEditForm = false;
+      console.log('Local books after update:', this.books);
+    },
+    error: (err) => {
+      console.error('Update failed:', err);
+      if (err.error) {
+        console.error('Server error response:', err.error);
+      }
+    },
+  });
+}
 }

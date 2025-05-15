@@ -55,10 +55,9 @@
 
         <div class="mb-3 mt-3">
             <label class="form-label">Genres (comma separated):</label>
-            <input type="text" class="form-control" name="genres" [(ngModel)]="genresDisplay" required>
+            <input type="text" class="form-control" name="genres" [formControl]="genresInput" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-
 </section>
