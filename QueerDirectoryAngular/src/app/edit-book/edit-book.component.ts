@@ -33,9 +33,6 @@ export class EditBookComponent implements OnInit {
     genres: [] as string[],
   };
 
-  // Remove genresString and use direct two-way binding with editBook.genres
-  // Then format for display only when needed
-
   constructor(
     private getAllBooksService: GetAllBooksService,
     private editBookService: EditBookService
@@ -49,8 +46,16 @@ export class EditBookComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadBooks();
-    
+    this.getAllBooksService.getAll().subscribe({
+      next: (data) => {
+        this.books = data;
+        this.filteredBooks = data;
+      },
+      error: (error) => {
+        console.error('Failed to fetch books', error);
+      },
+    });
+
     this.searchControl.valueChanges
       .pipe(
         startWith(''),
@@ -65,18 +70,52 @@ export class EditBookComponent implements OnInit {
       });
   }
 
-  loadBooks(): void {
-    this.getAllBooksService.getAll().subscribe({
-      next: (data) => {
-        this.books = data;
-        this.filteredBooks = data;
-      },
-      error: (error) => {
-        console.error('Failed to fetch books', error);
-      },
-    });
-  }
+  genresString = '';
 
+  //   setGenresFromString(value: string): void {
+  //   this.genresString = value;
+
+  //   this.editBook.genres = value
+  //     .split(',')
+  //     .map((g) => g.trim())
+  //     .filter((g) => g.length > 0);
+  // }
+
+  //   onEditClick(book: any): void {
+  //   this.editBook = {
+  //     _id: book._id,
+  //     title: book.title,
+  //     author: book.author,
+  //     short_description: book.short_description,
+  //     page: book.page_length,
+  //     genres: book.genres ?? [],
+  //   };
+
+  //   this.genresString = (book.genres ?? []).join(', ');
+
+  //   this.showEditForm = true;
+  //   this.toggleVisibility();
+  // }
+
+  //   submitEditBook(): void {
+  //     const updatePayload = {
+  //       title: this.editBook.title,
+  //       author: this.editBook.author,
+  //       short_description: this.editBook.short_description,
+  //       page_length: this.editBook.page,
+  //       genres: this.editBook.genres,
+  //     };
+
+  //     this.editBookService.editBook(this.editBook._id, updatePayload).subscribe({
+  //       next: (response) => {
+  //         console.log('Book updated:', response);
+  //         this.showEditForm = false;
+  //       },
+  //       error: (err) => {
+  //         console.error('Failed to update book:', err);
+  //       },
+  //     });
+  //   }
   onEditClick(book: any): void {
     this.editBook = {
       _id: book._id,
@@ -84,47 +123,43 @@ export class EditBookComponent implements OnInit {
       author: book.author,
       short_description: book.short_description,
       page: book.page_length,
-      genres: Array.isArray(book.genres) ? [...book.genres] : [],
+      genres: book.genres ?? [],
     };
-    
+
+    this.genresString = this.editBook.genres.join(', ');
     this.showEditForm = true;
     this.toggleVisibility();
   }
 
-  // Format genres array for display in the input
-  get genresDisplay(): string {
-    return this.editBook.genres.join(', ');
-  }
+  setGenresFromString(value: string): void {
+  this.genresString = value;
+  const parsed = value
+    .split(',')
+    .map((g) => g.trim())
+    .filter((g) => g.length > 0);
 
-  // Parse input back to genres array
-  set genresDisplay(value: string) {
-    this.editBook.genres = value
-      .split(',')
-      .map(g => g.trim())
-      .filter(g => g.length > 0);
-  }
+  this.editBook.genres = parsed;
+
+  console.log('Genres String:', this.genresString);
+  console.log('Parsed Genres:', this.editBook.genres);
+}
 
   submitEditBook(): void {
-    // Create a clean copy of the data to send
     const updatePayload = {
       title: this.editBook.title,
       author: this.editBook.author,
       short_description: this.editBook.short_description,
       page_length: this.editBook.page,
-      genres: [...this.editBook.genres], // Ensure we send a copy
+      genres: this.editBook.genres,
     };
-
-    console.log('Submitting payload:', updatePayload); // Debug log
 
     this.editBookService.editBook(this.editBook._id, updatePayload).subscribe({
       next: (response) => {
-        console.log('Update successful:', response);
+        console.log('Book updated:', response);
         this.showEditForm = false;
-        this.loadBooks(); // Refresh the list
       },
       error: (err) => {
-        console.error('Update failed:', err);
-        // Add user feedback here
+        console.error('Failed to update book:', err);
       },
     });
   }
