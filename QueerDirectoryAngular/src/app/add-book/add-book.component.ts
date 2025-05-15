@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddBookService } from '../add-book.service';
 import { CommonModule } from '@angular/common';
+import { of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-add-book',
@@ -39,6 +40,11 @@ export class AddBookComponent {
       error: (err) => {
         console.error('Failed to add book:', err);
       },
+    });
+
+    of('Book added!').subscribe((message) => {
+      alert(message);
+      window.location.reload();
     });
   }
 

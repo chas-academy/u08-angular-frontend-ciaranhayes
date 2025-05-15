@@ -11,6 +11,6 @@ export class EditBookService {
   constructor(private http:HttpClient) { }
 
   editBook(id: string, updatedBookData: any): Observable<any>{
-    return this.http.put(`${this.baseURL}/${id}`, updatedBookData)
+    return this.http.put(`${this.baseURL}/${id}`, updatedBookData);
   }
 }
