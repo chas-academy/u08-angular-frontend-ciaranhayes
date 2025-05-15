@@ -28,9 +28,9 @@
     </div>
 </section>
 <section id="editSubmit" class="container-fluid ps-md-5 pe-md-5"
-    [style.display]="(isVisible$ | async) ? 'block' : 'none'">
+    [style.display]="(isVisible$ | async) ? 'block' : 'none'" *ngIf="showEditForm">
     <form id="editInfoForm" (ngSubmit)="submitEditBook()" #editForm="ngForm" class="ms-3 me-3 ms-md-5 me-md-5">
-        <input class="form-control" name="_id" [value]="editBook._id">
+        <input type="hidden" class="form-control" name="_id" [value]="editBook._id">
 
         <div class="mb-3 mt-3">
             <label class="form-label">Title:</label>

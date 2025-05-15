@@ -84,7 +84,6 @@ export class EditBookComponent implements OnInit {
     this.genresInput.setValue(this.editBook.genres.join(', '));
     
     this.showEditForm = true;
-    this.toggleVisibility();
   }
 
   submitEditBook(): void {
